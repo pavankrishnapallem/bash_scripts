@@ -1,0 +1,30 @@
+name: using-need
+on:
+    push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - run: echo "from build"
+
+  unit-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+        - run: echo "from unit test"
+
+  integration-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+        - run: echo "from integration test"
+
+  deploy:
+    needs:
+      - unit-tests
+      - integration-tests
+
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "from deploy"
